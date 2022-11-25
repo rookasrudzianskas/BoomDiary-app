@@ -22,7 +22,7 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<'TabOne'>)
     return (
         <TouchableOpacity
           style={[styles.item, {height: reservation.height}]}
-          onPress={() => Alert.alert("Reservation", reservation.name)}
+          onPress={(event) => navigation.navigate("Modal", {id: event.id})}
           activeOpacity={0.7}
           className="shadow-sm mt-3"
         >
