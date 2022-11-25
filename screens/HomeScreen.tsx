@@ -3,10 +3,17 @@ import {Alert, StyleSheet, TouchableOpacity} from 'react-native';
 import { Text, View } from '../components/Themed';
 import { RootTabScreenProps } from '../types';
 import {StatusBar} from "expo-status-bar";
-import {Agenda, AgendaEntry} from "react-native-calendars/src";
+import {Agenda, AgendaEntry, AgendaSchedule} from "react-native-calendars/src";
 import events from "../assets/data/events.json";
+import {useState} from "react";
 
 export default function HomeScreen({ navigation }: RootTabScreenProps<'TabOne'>) {
+    const [items, setItems] = useState<AgendaSchedule>({});
+
+
+  const loadItems = (day: DateData) => {
+    setItems(events);
+  };
 
   const renderItem = (reservation: AgendaEntry, isFirst: boolean) => {
     const fontSize = isFirst ? 15 : 13;
@@ -30,6 +37,8 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<'TabOne'>)
         <Agenda
           items={events}
           renderItem={renderItem}
+          loadItemsForMonth={loadItems}
+          renderEmptyDate={() => <View className="flex-1 items-center justify-center"><Text className="text-gray-500">No events for this day</Text></View>}
         />
         <StatusBar style="auto" />
       </View>
