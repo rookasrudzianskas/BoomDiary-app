@@ -1,8 +1,6 @@
 //@ts-nocheck
 import { StatusBar } from 'expo-status-bar';
 import {Image, Platform, ScrollView, StyleSheet} from 'react-native';
-
-import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 import {RootStackScreenProps} from "../types";
 import event from "../assets/data/event.json";
@@ -47,7 +45,7 @@ export default function ModalScreen({route, navigation}: RootStackScreenProps<"M
                     },
                   ]}
               >
-                <Text>+{users.length}</Text>
+                <Text className="text-gray-600">+{users.length}</Text>
               </View>
             </View>
           </ScrollView>
