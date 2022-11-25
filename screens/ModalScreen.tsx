@@ -1,6 +1,6 @@
 //@ts-nocheck
 import { StatusBar } from 'expo-status-bar';
-import {Image, Platform, ScrollView, StyleSheet} from 'react-native';
+import {Image, Platform, ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
 import { Text, View } from '../components/Themed';
 import {RootStackScreenProps} from "../types";
 import event from "../assets/data/event.json";
@@ -16,12 +16,15 @@ export default function ModalScreen({route, navigation}: RootStackScreenProps<"M
   }
   return (
       <View style={styles.container}>
-        <Text className="text-2xl font-bold">{event.name}</Text>
-        <Text className="items-center flex text-xl justify-center">
-          <AntDesign name="calendar" size={22} color={"black"} />
-          {"  | "}
-          {new Date(event.date).toDateString()}
-        </Text>
+        <Text className="text-3xl font-bold text-purple-600 mt-3 mb-1">Events of today</Text>
+        <TouchableOpacity activeOpacity={0.7} className="bg-gray-100 p-3 rounded-md shadow-sm">
+          <Text className="text-2xl font-semibold">{event.name}</Text>
+          <Text className="items-center flex text-lg justify-center">
+            <AntDesign name="calendar" size={19} color={"black"} />
+            {"  | "}
+            <Text className="text-gray-600">{new Date(event.date).toDateString()}</Text>
+          </Text>
+        </TouchableOpacity>
 
         <View style={styles.footer}>
           <Text style={styles.subtitle}>Attendees</Text>
