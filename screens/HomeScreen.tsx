@@ -3,11 +3,12 @@ import { StyleSheet } from 'react-native';
 import { Text, View } from '../components/Themed';
 import { RootTabScreenProps } from '../types';
 import {StatusBar} from "expo-status-bar";
+import {Agenda} from "react-native-calendars/src";
 
 export default function HomeScreen({ navigation }: RootTabScreenProps<'TabOne'>) {
   return (
-      <View className="flex-1 items-center justify-center bg-white">
-        <Text>Open up App.js to start working on your app!</Text>
+      <View className="flex-1 bg-white pt-16">
+        <Agenda />
         <StatusBar style="auto" />
       </View>
   );
@@ -16,16 +17,18 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<'TabOne'>)
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
+  item: {
+    backgroundColor: "white",
+    flex: 1,
+    borderRadius: 5,
+    padding: 10,
+    marginRight: 10,
+    marginTop: 17,
   },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
+  emptyDate: {
+    height: 15,
+    flex: 1,
+    paddingTop: 30,
   },
 });

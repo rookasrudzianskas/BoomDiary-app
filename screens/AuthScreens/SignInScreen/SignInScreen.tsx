@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { useState } from "react";
 import {
   View,
@@ -6,6 +7,7 @@ import {
   useWindowDimensions,
   ScrollView,
 } from "react-native";
+// @ts-ignore
 import Logo from "./logo.png";
 import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";

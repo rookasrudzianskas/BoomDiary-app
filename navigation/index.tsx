@@ -54,8 +54,8 @@ function BottomTabNavigator() {
         component={HomeScreen}
         options={({ navigation }: RootTabScreenProps<'TabOne'>) => ({
           title: 'Events',
+            headerShown: false,
           tabBarIcon: ({ color }) => <MaterialIcons name="event" size={22} color={color} />,
-
         })}
       />
       <BottomTab.Screen
