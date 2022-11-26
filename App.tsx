@@ -6,6 +6,7 @@ import useColorScheme from './hooks/useColorScheme';
 import Navigation from './navigation';
 import { NhostClient, NhostReactProvider } from '@nhost/react';
 import * as SecureStore from 'expo-secure-store';
+import {NhostApolloProvider} from "@nhost/react-apollo";
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
@@ -24,8 +25,10 @@ export default function App() {
     return (
       <SafeAreaProvider>
         <NhostReactProvider nhost={nhost}>
-          <Navigation colorScheme={colorScheme} />
-          <StatusBar />
+          <NhostApolloProvider nhost={nhost}>
+            <Navigation colorScheme={colorScheme} />
+            <StatusBar />
+          </NhostApolloProvider>
         </NhostReactProvider>
       </SafeAreaProvider>
     );
