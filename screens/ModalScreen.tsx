@@ -32,7 +32,7 @@ export default function ModalScreen({route, navigation}: RootStackScreenProps<"M
                     <View className="flex-row items-center">
                         {users?.map((user, i) => (
                             <Image
-                                source={{ uri: user?.avatarUrl || "" }}
+                                source={{ uri: user?.avatarUrl || "https://picsum.photos/500/300?random=3" }}
                                 style={[
                                     styles.userAvatar,
                                     { transform: [{ translateX: -15 * i }] },
