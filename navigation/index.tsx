@@ -16,6 +16,7 @@ import LinkingConfiguration from './LinkingConfiguration';
 import UsersScreen from "../screens/UsersScreen/UsersScreen";
 import SignInScreen from "../screens/AuthScreens/SignInScreen";
 import SignUpScreen from "../screens/AuthScreens/SignUpScreen";
+import {useAuthenticationStatus} from "@nhost/react";
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -30,7 +31,7 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
-    const isAuthenticated = false;
+    const { isAuthenticated, isLoading } = useAuthenticationStatus();
     if(!isAuthenticated) {
         return (
             <Stack.Navigator>

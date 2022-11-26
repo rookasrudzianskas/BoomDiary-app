@@ -26,14 +26,9 @@ const SignInScreen = () => {
   const { control, handleSubmit } = useForm();
 
   const onSignInPressed = async (data) => {
-    if (loading) {
-      return;
-    }
     if (isLoading) {
       return;
     }
-
-    setLoading(true);
     const { email, password } = data;
     const { error, needsEmailVerification } = await signInEmailPassword(email, password);
     if (error) {
@@ -42,8 +37,6 @@ const SignInScreen = () => {
     if (needsEmailVerification) {
         Alert.alert("Email verification", "Please check your email for a verification link");
     }
-    // Sign in
-    setLoading(false);
   };
 
   const onForgotPasswordPressed = () => {
@@ -83,7 +76,7 @@ const SignInScreen = () => {
         />
 
         <CustomButton
-          text={loading ? "Loading..." : "Sign In"}
+          text={isLoading ? "Loading..." : "Sign In"}
           onPress={handleSubmit(onSignInPressed)}
         />
 
