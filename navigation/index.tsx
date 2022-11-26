@@ -1,9 +1,10 @@
+// @ts-nocheck
 import {FontAwesome, MaterialIcons} from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
-import { ColorSchemeName, Pressable } from 'react-native';
+import {ActivityIndicator, ColorSchemeName, Pressable, View} from 'react-native';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
@@ -32,6 +33,15 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
     const { isAuthenticated, isLoading } = useAuthenticationStatus();
+
+    if(isLoading) {
+        return (
+            <View className="h-screen items-center justify-center">
+                <ActivityIndicator />
+            </View>
+        )
+    }
+
     if(!isAuthenticated) {
         return (
             <Stack.Navigator>

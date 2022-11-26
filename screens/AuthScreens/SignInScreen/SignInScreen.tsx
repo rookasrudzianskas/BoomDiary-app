@@ -26,11 +26,12 @@ const SignInScreen = () => {
   const { control, handleSubmit } = useForm();
 
   const onSignInPressed = async (data) => {
+    const { email, password } = data;
     if (isLoading) {
       return;
     }
-    const { email, password } = data;
     const { error, needsEmailVerification } = await signInEmailPassword(email, password);
+
     if (error) {
       Alert.alert("Oops", error.message);
     }

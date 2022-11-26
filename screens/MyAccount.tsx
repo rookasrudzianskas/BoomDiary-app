@@ -4,17 +4,21 @@ import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 import CustomButton from "../components/CustomButton";
 import users from '../assets/data/users.json';
+import {useSignOut, useUserData} from "@nhost/react";
 
 const user = users[0];
 
 export default function MyAccount() {
-  return (
+    const {signOut} = useSignOut();
+    const user = useUserData();
+
+    return (
       <View style={styles.container}>
         <Image source={{ uri: user?.avatarUrl }} style={styles.avatar} />
         <Text style={styles.name}>{user?.displayName}</Text>
         <View style={{ marginTop: "auto" }}>
           <CustomButton
-              onPress={() => {}}
+              onPress={signOut}
               text="Sign out"
               type="TERTIARY"
               fgColor="crimson"
