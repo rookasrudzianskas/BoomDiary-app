@@ -1,16 +1,44 @@
 //@ts-nocheck
 import { StatusBar } from 'expo-status-bar';
-import {Image, Platform, ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
+import {ActivityIndicator, Image, Platform, ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
 import { Text, View } from '../components/Themed';
 import {RootStackScreenProps} from "../types";
-import event from "../assets/data/event.json";
 import {AntDesign} from "@expo/vector-icons";
 import users from "../assets/data/users.json";
 import CustomButton from "./AuthScreens/components/CustomButton";
+import {gql, useQuery} from "@apollo/client";
+
+const GetEvent = gql`
+    query GetEvent($id: uuid!) {
+        Event_by_pk(id: $id) {
+            id
+            name
+            date
+        }
+    }
+`
 
 export default function ModalScreen({route, navigation}: RootStackScreenProps<"Modal">) {
     const id = route?.params?.id;
-    console.log("Rendering event ", id);
+    const { data, loading, error } = useQuery(GetEvent, { variables: { id } });
+    const event = data?.Event_by_pk;
+
+    if(loading) {
+        return (
+            <View className="h-screen items-center justify-center">
+                <ActivityIndicator />
+            </View>
+        )
+    }
+
+    if(error) {
+        return (
+            <View className="h-screen items-center justify-center">
+                <Text>{error.message}</Text>
+            </View>
+        )
+    }
+
     const onJoin = () => {
 
     }
