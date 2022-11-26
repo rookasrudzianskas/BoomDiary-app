@@ -72,7 +72,7 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<'TabOne'>)
           selected={"2022-11-25"}
           renderItem={renderItem}
           loadItemsForMonth={loadItems}
-          showOnlySelectedDayItems={true}
+          // showOnlySelectedDayItems={true}
           renderEmptyDate={() => <View className="flex-1 items-center justify-center"><Text className="text-gray-500">No events for this day</Text></View>}
         />
         <StatusBar style="auto" />
