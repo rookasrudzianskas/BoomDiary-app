@@ -32,7 +32,7 @@ const CustomButton = ({
           fgColor ? { color: fgColor } : {},
         ]}
       >
-        {text} (coming soon)
+        {text}
       </Text>
     </TouchableOpacity>
   );
