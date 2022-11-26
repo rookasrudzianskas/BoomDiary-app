@@ -1,12 +1,13 @@
 //@ts-nocheck
 import { StatusBar } from 'expo-status-bar';
-import {ActivityIndicator, Image, Platform, ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
+import {ActivityIndicator, Alert, Image, Platform, ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
 import { Text, View } from '../components/Themed';
 import {RootStackScreenProps} from "../types";
 import {AntDesign} from "@expo/vector-icons";
 import users from "../assets/data/users.json";
 import CustomButton from "./AuthScreens/components/CustomButton";
-import {gql, useQuery} from "@apollo/client";
+import {gql, useMutation, useQuery} from "@apollo/client";
+import {useUserId} from "@nhost/react";
 
 const GetEvent = gql`
     query GetEvent($id: uuid!) {
@@ -16,11 +17,48 @@ const GetEvent = gql`
             date
         }
     }
-`
+`;
+
+const JoinEvent = gql`
+    mutation InsertEventAttendee($eventId: uuid!, $userId: uuid!) {
+        insert_EventAttendee(objects: [{ eventId: $eventId, userId: $userId }]) {
+            returning {
+                id
+                userId
+                eventId
+                Event {
+                    id
+                    EventAttendee {
+                        id
+                    }
+                }
+            }
+        }
+    }
+`;
+
+const GetEvent = gql`
+    query GetEvent($id: uuid!) {
+        Event_by_pk(id: $id) {
+            id
+            name
+            date
+            EventAttendees {
+                user {
+                    id
+                    displayName
+                    avatarUrl
+                }
+            }
+        }
+    }
+`;
 
 export default function ModalScreen({route, navigation}: RootStackScreenProps<"Modal">) {
     const id = route?.params?.id;
     const { data, loading, error } = useQuery(GetEvent, { variables: { id } });
+    const [doJoinEvent, { loading: loadingJoinEvent, error: errorJoinEvent }] = useMutation(JoinEvent);
+    const userId = useUserId();
     const event = data?.Event_by_pk;
 
     if(loading) {
@@ -39,8 +77,12 @@ export default function ModalScreen({route, navigation}: RootStackScreenProps<"M
         )
     }
 
-    const onJoin = () => {
-
+    const onJoin = async () => {
+        try {
+            await doJoinEvent({variables: {eventId: id, userId}});
+        } catch (err) {
+            Alert.alert("Failed to join the event!", (e as Error).message);
+        }
     }
     return (
         <View style={styles.container}>
