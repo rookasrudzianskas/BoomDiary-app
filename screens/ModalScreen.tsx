@@ -9,16 +9,6 @@ import CustomButton from "./AuthScreens/components/CustomButton";
 import {gql, useMutation, useQuery} from "@apollo/client";
 import {useUserId} from "@nhost/react";
 
-const GetEvent = gql`
-    query GetEvent($id: uuid!) {
-        Event_by_pk(id: $id) {
-            id
-            name
-            date
-        }
-    }
-`;
-
 const JoinEvent = gql`
     mutation InsertEventAttendee($eventId: uuid!, $userId: uuid!) {
         insert_EventAttendee(objects: [{ eventId: $eventId, userId: $userId }]) {
@@ -43,7 +33,7 @@ const GetEvent = gql`
             id
             name
             date
-            EventAttendees {
+            EventAttendee {
                 user {
                     id
                     displayName
@@ -60,7 +50,8 @@ export default function ModalScreen({route, navigation}: RootStackScreenProps<"M
     const [doJoinEvent, { loading: loadingJoinEvent, error: errorJoinEvent }] = useMutation(JoinEvent);
     const userId = useUserId();
     const event = data?.Event_by_pk;
-
+    const displayedUsers = (event?.EventAttendee || []).slice(0, 5).map((attendee) => attendee.user);
+    const joined = event?.EventAttendee?.some((attendee) => attendee.user.id === userId);
     if(loading) {
         return (
             <View className="h-screen items-center justify-center">
@@ -100,7 +91,7 @@ export default function ModalScreen({route, navigation}: RootStackScreenProps<"M
                 <Text style={styles.subtitle}>Attendees</Text>
                 <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                     <View className="flex-row items-center">
-                        {users?.map((user, i) => (
+                        {displayedUsers?.map((user, i) => (
                             <Image
                                 source={{ uri: user?.avatarUrl || "https://picsum.photos/500/300?random=3" }}
                                 style={[
@@ -118,12 +109,12 @@ export default function ModalScreen({route, navigation}: RootStackScreenProps<"M
                                 },
                             ]}
                         >
-                            <Text className="text-gray-600">+{users.length}</Text>
+                            <Text className="text-gray-600">+{event?.EventAttendee?.length}</Text>
                         </View>
                     </View>
                 </ScrollView>
 
-                <CustomButton text="Join the event" onPress={onJoin} />
+                {!joined ? <CustomButton text="Join the event" onPress={onJoin} /> : null}
             </View>
 
             <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
