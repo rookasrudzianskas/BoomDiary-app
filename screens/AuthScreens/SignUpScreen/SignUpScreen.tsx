@@ -6,6 +6,7 @@ import CustomButton from "../components/CustomButton";
 import SocialSignInButtons from "../components/SocialSignInButtons";
 import { useNavigation } from "@react-navigation/core";
 import { useForm } from "react-hook-form";
+import { useSignUpEmailPassword } from "@nhost/react";
 
 const EMAIL_REGEX =
   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
@@ -14,13 +15,25 @@ const SignUpScreen = () => {
   const { control, handleSubmit, watch } = useForm();
   const pwd = watch("password");
   const navigation = useNavigation();
+  const { signUpEmailPassword, isLoading } = useSignUpEmailPassword();
 
   const onRegisterPressed = async (data) => {
     const { name, email, password } = data;
     try {
       // sign up
+      if(isLoading) return;
+      const {error, isSuccess, needsEmailVerification} = await signUpEmailPassword(email, password, { displayName: name.trim(), metadata: { name } });
+      if (error) {
+        Alert.alert("Oops", error.message);
+      }
+      if (isSuccess) {
+        navigation.navigate("SignIn");
+      }
 
-      navigation.navigate("SignIn");
+      if(needsEmailVerification) {
+        Alert.alert("Email verification", "Please check your email for a verification link");
+        navigation.navigate("SignIn");
+      }
     } catch (e) {
       Alert.alert("Oops", (e as Error).message);
     }
@@ -93,7 +106,7 @@ const SignUpScreen = () => {
         />
 
         <CustomButton
-          text="Register"
+          text={isLoading ? "Registering.." : "Register"}
           onPress={handleSubmit(onRegisterPressed)}
         />
 

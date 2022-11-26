@@ -5,7 +5,7 @@ import {
   Image,
   StyleSheet,
   useWindowDimensions,
-  ScrollView,
+  ScrollView, Alert,
 } from "react-native";
 // @ts-ignore
 import Logo from "./rokas-main.jpg";
@@ -14,6 +14,7 @@ import CustomButton from "../components/CustomButton";
 import SocialSignInButtons from "../components/SocialSignInButtons";
 import { useNavigation } from "@react-navigation/native";
 import { useForm } from "react-hook-form";
+import { useSignInEmailPassword } from "@nhost/react";
 
 const EMAIL_REGEX =
   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
@@ -21,18 +22,27 @@ const EMAIL_REGEX =
 const SignInScreen = () => {
   const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
-
+  const { signInEmailPassword, isLoading } = useSignInEmailPassword();
   const { control, handleSubmit } = useForm();
 
   const onSignInPressed = async (data) => {
     if (loading) {
       return;
     }
+    if (isLoading) {
+      return;
+    }
 
     setLoading(true);
-
+    const { email, password } = data;
+    const { error, needsEmailVerification } = await signInEmailPassword(email, password);
+    if (error) {
+      Alert.alert("Oops", error.message);
+    }
+    if (needsEmailVerification) {
+        Alert.alert("Email verification", "Please check your email for a verification link");
+    }
     // Sign in
-
     setLoading(false);
   };
 

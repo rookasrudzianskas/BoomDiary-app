@@ -7,7 +7,6 @@ import Navigation from './navigation';
 import { NhostClient, NhostReactProvider } from '@nhost/react';
 import * as SecureStore from 'expo-secure-store';
 
-
 export default function App() {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
