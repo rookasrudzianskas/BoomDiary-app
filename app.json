@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "VirtualEvents",
-    "slug": "VirtualEvents",
+    "name": "meettix",
+    "slug": "meettix",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/logo.png",
@@ -22,6 +22,8 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "rooookas.meettix",
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/logo.png",
         "backgroundColor": "#ffffff"
@@ -29,6 +31,11 @@
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "08826f0a-914b-46c0-95e7-9da43eb97c56"
+      }
     }
   }
 }
