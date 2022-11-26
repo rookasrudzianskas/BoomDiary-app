@@ -6,6 +6,8 @@ import {StatusBar} from "expo-status-bar";
 import {Agenda, AgendaEntry, AgendaSchedule, DateData} from "react-native-calendars/src";
 import events from "../assets/data/events.json";
 import {useState} from "react";
+import {Entypo} from "@expo/vector-icons";
+import {useNavigation} from "@react-navigation/native";
 
 export default function HomeScreen({ navigation }: RootTabScreenProps<'TabOne'>) {
     const [items, setItems] = useState<AgendaSchedule>({});
@@ -32,7 +34,11 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<'TabOne'>)
   }
 
   return (
-      <View className="flex-1 bg-white pt-16">
+      <View className="flex-1 bg-white">
+          <TouchableOpacity onPress={() => navigation.navigate("Users")} activeOpacity={0.7} className="pt-12 px-6 items-end">
+          {/*    some kind of info icon */}
+              <Entypo name="info-with-circle" size={20} color="black" />
+          </TouchableOpacity>
         <Agenda
           items={events}
           selected={"2022-11-25"}
