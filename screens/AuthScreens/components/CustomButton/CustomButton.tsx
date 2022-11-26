@@ -17,7 +17,7 @@ const CustomButton = ({
   fgColor,
 }: CustomButtonProps) => {
   return (
-    <TouchableOpacity activeOpacity={0.7}
+    <TouchableOpacity activeOpacity={1}
       onPress={onPress}
       style={[
         styles.container,
@@ -32,7 +32,7 @@ const CustomButton = ({
           fgColor ? { color: fgColor } : {},
         ]}
       >
-        {text}
+        {text} (coming soon)
       </Text>
     </TouchableOpacity>
   );
