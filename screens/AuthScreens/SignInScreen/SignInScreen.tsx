@@ -8,7 +8,7 @@ import {
   ScrollView,
 } from "react-native";
 // @ts-ignore
-import Logo from "./logo.png";
+import Logo from "./rokas-main.jpg";
 import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
 import SocialSignInButtons from "../components/SocialSignInButtons";
