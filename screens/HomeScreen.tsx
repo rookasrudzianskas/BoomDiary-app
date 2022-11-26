@@ -3,7 +3,7 @@ import {Alert, StyleSheet, TouchableOpacity} from 'react-native';
 import { Text, View } from '../components/Themed';
 import { RootTabScreenProps } from '../types';
 import {StatusBar} from "expo-status-bar";
-import {Agenda, AgendaEntry, AgendaSchedule} from "react-native-calendars/src";
+import {Agenda, AgendaEntry, AgendaSchedule, DateData} from "react-native-calendars/src";
 import events from "../assets/data/events.json";
 import {useState} from "react";
 
@@ -29,7 +29,6 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<'TabOne'>)
           <Text className="text-gray-500" style={{ fontSize, color }}>{reservation.name}</Text>
         </TouchableOpacity>
     )
-
   }
 
   return (
