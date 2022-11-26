@@ -10,10 +10,12 @@ import useColorScheme from '../hooks/useColorScheme';
 import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import HomeScreen from '../screens/HomeScreen';
-import TabTwoScreen from '../screens/TabTwoScreen';
+import MyAccount from '../screens/MyAccount';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 import UsersScreen from "../screens/UsersScreen/UsersScreen";
+import SignInScreen from "../screens/AuthScreens/SignInScreen";
+import SignUpScreen from "../screens/AuthScreens/SignUpScreen";
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -28,7 +30,24 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
-  return (
+    const isAuthenticated = false;
+    if(!isAuthenticated) {
+        return (
+            <Stack.Navigator>
+                <Stack.Screen
+                    name="SignIn"
+                    component={SignInScreen}
+                    options={{ title: "Sign in", headerShown: false }}
+                />
+                <Stack.Screen
+                    name="SignUp"
+                    component={SignUpScreen}
+                    options={{ title: "Create an account" }}
+                />
+            </Stack.Navigator>
+        )
+    }
+    return (
     <Stack.Navigator>
       <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
@@ -62,10 +81,10 @@ function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="TabTwo"
-        component={TabTwoScreen}
+        component={MyAccount}
         options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: 'Profile',
+          tabBarIcon: ({ color }) => <FontAwesome name="user" size={22} color={color} />,
         }}
       />
     </BottomTab.Navigator>
