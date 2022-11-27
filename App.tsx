@@ -29,14 +29,14 @@ export default function App() {
     return (
         <GestureHandlerRootView style={{flex: 1}}>
           {/*<OverlayProvider>*/}
-      <SafeAreaProvider>
-            <NhostReactProvider nhost={nhost}>
-              <NhostApolloProvider nhost={nhost}>
-                <Navigation colorScheme={colorScheme} />
-                <StatusBar />
-              </NhostApolloProvider>
-            </NhostReactProvider>
-      </SafeAreaProvider>
+            <SafeAreaProvider>
+                  <NhostReactProvider nhost={nhost}>
+                    <NhostApolloProvider nhost={nhost}>
+                      <Navigation colorScheme={colorScheme} />
+                      <StatusBar />
+                    </NhostApolloProvider>
+                  </NhostReactProvider>
+            </SafeAreaProvider>
           {/*</OverlayProvider>*/}
         </GestureHandlerRootView>
     );
