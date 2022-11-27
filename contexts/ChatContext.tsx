@@ -10,19 +10,35 @@ const ChatContext = createContext<ChatContextType>({});
 const ChatContextProvider = ({ children }: { children: React.ReactNode }) => {
     const [chatClient, setChatClient] = useState<StreamChat>();
     const [currentChannel, setCurrentChannel] = useState<Channel>();
-    const value = {};
     const user = useUserData();
 
     useEffect(() => {
+        const initChat = async () => {
+            if(!user) return;
+            const client = StreamChat.getInstance("r84kqq9sv9mm");
 
+            await client.connectUser({
+                    id: user.id,
+                    name: user.displayName,
+                    image: user.avatarUrl
+                },
+                client.devToken(user.id)
+            );
+            setChatClient(client);
+        }
+        if (!chatClient) {
+            initChat();
+        }
     }, [user?.id]);
 
     useEffect(() => {
-        const initClient = async () => {
-            const client = StreamChat.getInstance("r84kqq9sv9mm");
+        return () => {
+            chatClient?.disconnectUser();
+            setChatClient(undefined);
         }
     }, []);
 
+    const value = { chatClient, currentChannel, setCurrentChannel };
 
     return (
         <ChatContext.Provider value={value}>
