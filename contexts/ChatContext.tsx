@@ -1,13 +1,23 @@
 // @ts-nocheck
-import React, { createContext, useContext } from 'react';
+import React, {createContext, useContext, useEffect, useState} from 'react';
 import { StreamChat } from 'stream-chat';
+import {useUserData} from "@nhost/react";
 
 interface ChatContextType {};
 
 const ChatContext = createContext<ChatContextType>({});
 
 const ChatContextProvider = ({ children }: { children: React.ReactNode }) => {
+    const [chatClient, setChatClient] = useState<StreamChat>();
+    const [currentChannel, setCurrentChannel] = useState<Channel>();
     const value = {};
+    const user = useUserData();
+
+    useEffect(() => {
+
+    }, [user?.id]);
+
+
     return (
         <ChatContext.Provider value={value}>
             {children}
