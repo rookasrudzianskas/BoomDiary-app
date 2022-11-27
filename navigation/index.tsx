@@ -91,6 +91,17 @@ function BottomTabNavigator() {
           tabBarIcon: ({ color }) => <MaterialIcons name="event" size={22} color={color} />,
         })}
       />
+    <BottomTab.Screen
+        name="Chat"
+        component={ChatStackNavigator}
+        options={{
+            headerShown: false,
+            tabBarIcon: ({ color}) => (
+                <Ionicons name="chatbox-ellipses-outline" size={22} color={color} />
+            )
+        }}
+
+    />
       <BottomTab.Screen
         name="TabTwo"
         component={MyAccount}
@@ -99,17 +110,6 @@ function BottomTabNavigator() {
           tabBarIcon: ({ color }) => <FontAwesome name="user" size={22} color={color} />,
         }}
       />
-        <BottomTab.Screen
-            name="Chat"
-            component={ChatStackNavigator}
-            options={{
-                headerShown: false,
-                tabBarIcon: ({ color}) => (
-                    <Ionicons name="chatbox-ellipses-outline" size={22} color={color} />
-                )
-            }}
-
-        />
     </BottomTab.Navigator>
   );
 }
