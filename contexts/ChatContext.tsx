@@ -18,10 +18,10 @@ const ChatContextProvider = ({ children }: { children: React.ReactNode }) => {
     }, [user?.id]);
 
     useEffect(() => {
-        (async () => {
+        const initClient = async () => {
             const client = StreamChat.getInstance("r84kqq9sv9mm");
-        })();
-    })
+        }
+    }, []);
 
 
     return (
