@@ -1,5 +1,5 @@
 // @ts-nocheck
-import {FontAwesome, MaterialIcons} from '@expo/vector-icons';
+import {FontAwesome, Ionicons, MaterialIcons} from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -18,6 +18,7 @@ import UsersScreen from "../screens/UsersScreen/UsersScreen";
 import SignInScreen from "../screens/AuthScreens/SignInScreen";
 import SignUpScreen from "../screens/AuthScreens/SignUpScreen";
 import {useAuthenticationStatus} from "@nhost/react";
+import ChatStackNavigator from "./ChatStackNavigator";
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -98,6 +99,17 @@ function BottomTabNavigator() {
           tabBarIcon: ({ color }) => <FontAwesome name="user" size={22} color={color} />,
         }}
       />
+        <BottomTab.Screen
+            name="Chat"
+            component={ChatStackNavigator}
+            options={{
+                headerShown: false,
+                tabBarIcon: ({ color}) => (
+                    <Ionicons name="chatbox-ellipses-outline" size={22} color={color} />
+                )
+            }}
+
+        />
     </BottomTab.Navigator>
   );
 }
