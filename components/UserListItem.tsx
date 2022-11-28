@@ -10,7 +10,7 @@ interface UserListItemProps {
 const UserListItem = ({ user }: UserListItemProps) => {
     const {startDMChatRoom} = useChatContext();
     return (
-        <TouchableOpacity onPress={startDMChatRoom} activeOpacity={0.7} style={styles.container}>
+        <TouchableOpacity onPress={() => startDMChatRoom(user)} activeOpacity={0.7} style={styles.container}>
             <Image source={{ uri: user.avatarUrl }} style={styles.image} />
             <Text style={styles.name}>{user.displayName}</Text>
         </TouchableOpacity>

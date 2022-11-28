@@ -4,6 +4,7 @@ import {Channel, StreamChat} from 'stream-chat';
 import {useUserData} from "@nhost/react";
 import {OverlayProvider, Chat} from "stream-chat-expo"
 import {ActivityIndicator, View} from "react-native";
+import {useNavigation} from "@react-navigation/native";
 
 interface ChatContextType {};
 
@@ -13,6 +14,7 @@ const ChatContextProvider = ({ children }: { children: React.ReactNode }) => {
     const client = StreamChat.getInstance("r84kqq9sv9mm");
     const [chatClient, setChatClient] = useState<StreamChat>();
     const [currentChannel, setCurrentChannel] = useState<Channel>();
+    const navigation = useNavigation();
     const user = useUserData();
 
     useEffect(() => {
@@ -46,8 +48,22 @@ const ChatContextProvider = ({ children }: { children: React.ReactNode }) => {
         }
     }, []);
 
-    const startDMChatRoom = (user) => {
-        console.warn("startDMChatRoom", user);
+    const startDMChatRoom = async (chatWithUser) => {
+        if (!chatClient?.userID) return;
+
+        try {
+            const newChannel = chatClient.channel("messaging", {
+                demo: "virtual-event",
+                members: [chatClient.userID, chatWithUser.id],
+            });
+
+            await newChannel.watch();
+            setCurrentChannel(newChannel);
+            navigation.replace('ChatRoom');
+        } catch (e) {
+            console.log(e);
+        }
+
     }
 
     const value = { chatClient, currentChannel, setCurrentChannel, startDMChatRoom };
