@@ -95,6 +95,7 @@ const ChatContextProvider = ({ children }: { children: React.ReactNode }) => {
         </View>
     )
 
+
     return (
         <OverlayProvider>
             <Chat client={chatClient}>
