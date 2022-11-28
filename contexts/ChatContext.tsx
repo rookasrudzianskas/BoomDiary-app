@@ -66,6 +66,27 @@ const ChatContextProvider = ({ children }: { children: React.ReactNode }) => {
 
     }
 
+    const joinEventChatRoom = async (event) => {
+        if (!chatClient) {
+            return;
+        }
+        const channelId = `room-${event.id}`;
+        const eventChannel = chatClient.channel('livestream', channelId, {
+            name: event.name,
+        });
+
+        await eventChannel.watch({ watchers: { limit: 100 } });
+        setCurrentChannel(eventChannel);
+
+        navigation.navigate('Root', {
+            screen: 'Chat',
+        });
+        navigation.navigate('Root', {
+            screen: 'Chat',
+            params: { screen: 'ChatRoom' },
+        });
+    };
+
     const value = { chatClient, currentChannel, setCurrentChannel, startDMChatRoom };
 
     if(!chatClient) return (
