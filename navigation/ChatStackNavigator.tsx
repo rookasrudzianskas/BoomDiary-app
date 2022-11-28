@@ -14,24 +14,22 @@ const Stack = createNativeStackNavigator();
 export default () => {
     const navigation = useNavigation();
     return (
-    <ChatContextProvider>
         <Stack.Navigator>
-                <Stack.Screen
-                    options={{
-                        headerRight: () => (
-                            // @ts-ignore
-                            <TouchableOpacity onPress={() => navigation.navigate("Users")} activeOpacity={0.7} className=" px-1 items-end">
-                                {/*    some kind of info icon */}
-                                <Entypo name="info-with-circle" size={20} color="black" />
-                            </TouchableOpacity>
-                        )
-                    }}
-                    name="Chats" component={ChatsScreen} />
-                <Stack.Screen name="ChatRoom" component={ChatRoomScreen} />
-                <Stack.Group screenOptions={{ presentation: 'modal' }}>
-                    <Stack.Screen  name="Users" component={UsersScreen} />
-                </Stack.Group>
+            <Stack.Screen
+                options={{
+                    headerRight: () => (
+                        // @ts-ignore
+                        <TouchableOpacity onPress={() => navigation.navigate("Users")} activeOpacity={0.7} className=" px-1 items-end">
+                            {/*    some kind of info icon */}
+                            <Entypo name="info-with-circle" size={20} color="black" />
+                        </TouchableOpacity>
+                    )
+                }}
+                name="Chats" component={ChatsScreen} />
+            <Stack.Screen name="ChatRoom" component={ChatRoomScreen} />
+            <Stack.Group screenOptions={{ presentation: 'modal' }}>
+                <Stack.Screen  name="Users" component={UsersScreen} />
+            </Stack.Group>
         </Stack.Navigator>
-    </ChatContextProvider>
     )
 }

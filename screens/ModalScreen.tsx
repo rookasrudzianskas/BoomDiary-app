@@ -8,6 +8,7 @@ import users from "../assets/data/users.json";
 import CustomButton from "./AuthScreens/components/CustomButton";
 import {gql, useMutation, useQuery} from "@apollo/client";
 import {useUserId} from "@nhost/react";
+import {useChatContext} from "../contexts/ChatContext";
 
 const JoinEvent = gql`
     mutation InsertEventAttendee($eventId: uuid!, $userId: uuid!) {
@@ -52,6 +53,8 @@ export default function ModalScreen({route, navigation}: RootStackScreenProps<"M
     const event = data?.Event_by_pk;
     const displayedUsers = (event?.EventAttendee || []).slice(0, 5).map((attendee) => attendee.user);
     const joined = event?.EventAttendee?.some((attendee) => attendee.user.id === userId);
+    const {joinEventChatRoom} = useChatContext();
+
     if(loading) {
         return (
             <View className="h-screen items-center justify-center">
@@ -114,7 +117,12 @@ export default function ModalScreen({route, navigation}: RootStackScreenProps<"M
                     </View>
                 </ScrollView>
 
-                {!joined ? <CustomButton text="Join the event" onPress={onJoin} /> : null}
+                {!joined ? <CustomButton text="Join the event" onPress={onJoin} /> :
+                    <CustomButton
+                        text="Join the conversation"
+                        onPress={() => joinEventChatRoom(event)}
+                    />
+                }
             </View>
 
             <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
