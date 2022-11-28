@@ -62,11 +62,8 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<'TabOne'>)
       }
 
   return (
-      <View className="flex-1 bg-white">
-          <TouchableOpacity onPress={() => navigation.navigate("Users")} activeOpacity={0.7} className="pt-12 px-6 items-end">
-          {/*    some kind of info icon */}
-              <Entypo name="info-with-circle" size={20} color="black" />
-          </TouchableOpacity>
+      <View className="flex-1 bg-white pt-16">
+
         <Agenda
           items={events}
           selected={"2022-11-25"}

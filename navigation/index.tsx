@@ -65,7 +65,6 @@ function RootNavigator() {
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
         <Stack.Screen name="Modal" component={ModalScreen} />
-        <Stack.Screen name="Users" component={UsersScreen} />
       </Stack.Group>
     </Stack.Navigator>
   );
