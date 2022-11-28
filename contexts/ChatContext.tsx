@@ -46,7 +46,11 @@ const ChatContextProvider = ({ children }: { children: React.ReactNode }) => {
         }
     }, []);
 
-    const value = { chatClient, currentChannel, setCurrentChannel };
+    const startDMChatRoom = (user) => {
+        console.warn("startDMChatRoom", user);
+    }
+
+    const value = { chatClient, currentChannel, setCurrentChannel, startDMChatRoom };
 
     if(!chatClient) return (
         <View className="h-screen items-center justify-center">

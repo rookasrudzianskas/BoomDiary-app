@@ -1,14 +1,16 @@
 //@ts-nocheck
 import React from 'react';
 import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import {useChatContext} from "../contexts/ChatContext";
 
 interface UserListItemProps {
     user: any;
 }
 
 const UserListItem = ({ user }: UserListItemProps) => {
+    const {startDMChatRoom} = useChatContext();
     return (
-        <TouchableOpacity activeOpacity={0.7} style={styles.container}>
+        <TouchableOpacity onPress={startDMChatRoom} activeOpacity={0.7} style={styles.container}>
             <Image source={{ uri: user.avatarUrl }} style={styles.image} />
             <Text style={styles.name}>{user.displayName}</Text>
         </TouchableOpacity>
